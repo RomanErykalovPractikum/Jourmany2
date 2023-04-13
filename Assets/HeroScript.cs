@@ -9,13 +9,13 @@ public class HeroScript : MonoBehaviour
         switch (heroNumber)
         {
             case 0://Lepry
-                return "LEPRY PERY give you maney!";
+                return LepryQuestion();
 
             case 1://Ninja
-                return "NINJA............NINJA";
+                return NinjaQuestion();
     
             case 2://Dark
-                return "Hello I am DARK DARK DARK!";
+                return DarkQuestion();
 
             default:
                 return "Vse po pizde poshlo";
@@ -24,6 +24,23 @@ public class HeroScript : MonoBehaviour
         }
 
     }
+
+    string LepryQuestion()
+    {
+        return "LEPRY PERY give you maney!";
+    }
+
+    string NinjaQuestion()
+    {
+        return "NINJA............NINJA";
+    }
+
+    string DarkQuestion()
+    {
+        return "Hello I am DARK DARK DARK!";
+    }
+
+
 
     public string Answer(int heroNumber, bool answer)
     {
