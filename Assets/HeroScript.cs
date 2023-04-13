@@ -10,43 +10,40 @@ public class HeroScript : MonoBehaviour
         {
             case 0://Lepry
                 return "LEPRY PERY give you maney!";
-                break;
 
             case 1://Ninja
                 return "NINJA............NINJA";
-                break;
-
+    
             case 2://Dark
                 return "Hello I am DARK DARK DARK!";
-                break;
 
             default:
                 return "Vse po pizde poshlo";
-                break;
+
 
         }
 
     }
 
-    public string Question(int heroNumber)
+    public string Answer(int heroNumber, bool answer)
     {
         switch (heroNumber)
         {
             case 0://Lepry
-                return "LEPRY PERY give you maney!";
-                break;
+                if (answer) return "LEPRY очень доволено отетом ДА!"; else return "LEPRY зол и рассержен ведь ты сказал НЕТ";
+
 
             case 1://Ninja
-                return "NINJA............NINJA";
-                break;
+                if (answer) return "NINJA uhhuuuuu YES"; else return "NINJA :( :(: :{ NOOOO";
+
 
             case 2://Dark
-                return "Hello I am DARK DARK DARK!";
-                break;
+                if (answer) return "DARK is ready for YES always"; else return "А не прихуел ли ты отвечть мне NO?";
+
 
             default:
                 return "Vse po pizde poshlo";
-                break;
+
 
         }
 

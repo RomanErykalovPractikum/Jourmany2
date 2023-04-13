@@ -20,12 +20,12 @@ public class Putin : MonoBehaviour
         [1] = "Ninja",
         [2] = "Dark"
     };
-    private enum Stage { question, waitingForAnswer, answer , waitingForNextQuestion };
+    private enum Stage { question, waitingForPushYesNoButton, answer , waitingForPushOkButton };
     private Stage gameStage = Stage.question;
     private GameObject hero;
     private int heroNumber;
 
-    void Start()
+    void Awake()
     {
 
         foreach (GameObject hero in heroes)
@@ -38,30 +38,27 @@ public class Putin : MonoBehaviour
         Question();
     }
 
-    void Question()
+    public void Question()
     {
-        //Inactivate old hero
-
-        //new hero, question buttons
+        buttonOk.SetActive(false);
+        if (!(hero is null)) hero.SetActive(false);
         heroNumber = Random.Range(0, 3);
-        GameObject hero = heroes[heroNumber];
+        hero = heroes[heroNumber];
+        hero.SetActive(true);
         mainText.GetComponent<Text>().text = GameObject.Find(indexHeroes[heroNumber]).GetComponent<HeroScript>().Question(heroNumber);
+        gameStage = Stage.waitingForPushYesNoButton;
         buttonYes.SetActive(true);
         buttonNo.SetActive(true);
-        gameStage = Stage.waitingForAnswer;
     }
 
-    void Update()
+    public void Answer(bool answer)
     {
-        if (gameStage == Stage.waitingForAnswer || gameStage == Stage.waitingForNextQuestion ) { return; };
-
-
-    }
-
-    public void OnClickYesNo (bool answer)
-    {
+        buttonYes.SetActive(false);
+        buttonNo.SetActive(false);
         gameStage = Stage.answer;
         mainText.GetComponent<Text>().text = GameObject.Find(indexHeroes[heroNumber]).GetComponent<HeroScript>().Answer(heroNumber, answer);
+        buttonOk.SetActive(true);
+        gameStage = Stage.waitingForPushOkButton;
     }
 }
 
