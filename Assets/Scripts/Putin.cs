@@ -37,11 +37,23 @@ public class Putin : MonoBehaviour
         public int scientists;
         public int galaxy;
 
-        //state
+        //KingState
         public KingState kingState;
     }
 
-    public GameObject[] heroes = new GameObject[3];
+    public struct CharacterQuestion
+    {
+        public string questionString;
+        public CharacterQuestion (string questionString)
+        {
+            this.questionString = questionString;
+        }
+    }
+
+
+
+    private const int HEROES_COUNT = 18;
+    public GameObject[] heroes = new GameObject[HEROES_COUNT];
     public GameObject buttonYes;
     public GameObject buttonNo;
     public GameObject buttonOk;
@@ -61,18 +73,38 @@ public class Putin : MonoBehaviour
 
     public GameObject kingState;
 
-    private Dictionary<int, string> indexHeroes = new Dictionary<int, string>()
+    /*private Dictionary<int, string> indexHeroes = new Dictionary<int, string>()
     {
-        [0] = "Lepry",
-        [1] = "Ninja",
-        [2] = "Dark"
-    };
+        [0] = "RobotKind",
+        [1] = "RobotSloppy",
+        [2] = "RobotWar",
+
+        [3] = "PetCat",
+        [4] = "PetDog",
+        [5] = "PetCatDog",
+
+        [6] = "GloveSnitch",
+        [7] = "GloveSand",
+        [8] = "GloveClips",
+
+        [9] = "WorkerLee",
+        [10] = "WorkerRight",
+        [11] = "WorkerHubris",
+
+        [12] = "GalaxyReptilian",
+        [13] = "GalaxiSlime",
+        [14] = "GalaxyKraken",
+
+        [15] = "DrPiff",
+        [16] = "DrBolt",
+        [17] = "DrPlot"
+    };*/
     private GameObject hero;
     private int heroNumber;
     private GameState gameState;
     private List<int> heroesHistory = new List<int>();
 
-    void Awake()
+    void Start()
     {
         gameState.food = gameState.money = gameState.techno = gameState.pollen = 10;
         gameState.workers = gameState.pets = gameState.robots = gameState.gloves = gameState.scientists = gameState.galaxy = 5;
@@ -97,7 +129,7 @@ public class Putin : MonoBehaviour
 
         do
         {
-            heroNumber = Random.Range(0, 3);
+            heroNumber = Random.Range(0, HEROES_COUNT);
             Debug.Log(heroNumber);
         }
         while ((heroesHistory.Count != 0) && (heroesHistory[heroesHistory.Count - 1] == heroNumber));
@@ -105,7 +137,7 @@ public class Putin : MonoBehaviour
         heroesHistory.Add(heroNumber);
         hero = heroes[heroNumber];
         hero.SetActive(true);
-        mainText.GetComponent<Text>().text = GameObject.Find(indexHeroes[heroNumber]).GetComponent<HeroScript>().Question(heroNumber);
+        mainText.GetComponent<Text>().text = heroes[heroNumber].GetComponent<HeroScript>().Question(heroNumber).questionString;
         buttonYes.SetActive(true);
         buttonNo.SetActive(true);
     }
@@ -114,7 +146,7 @@ public class Putin : MonoBehaviour
     {
         buttonYes.SetActive(false);
         buttonNo.SetActive(false);
-        mainText.GetComponent<Text>().text = GameObject.Find(indexHeroes[heroNumber]).GetComponent<HeroScript>().Answer(heroNumber, answer);
+        mainText.GetComponent<Text>().text = heroes[heroNumber].GetComponent<HeroScript>().Answer(heroNumber, answer);
         buttonOk.SetActive(true);
     }
 
