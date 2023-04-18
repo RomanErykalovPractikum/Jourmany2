@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using UnityEngine;
 using static Putin;
 
-public class RobotKind : MonoBehaviour
+public class RobotKindCharacter : Character
 {
-    public CharacterQuestion RobotKindQuestion()
+    public RobotKindCharacter() : base("Alice", "Robots") { }
+
+    public override CharacterQuestion Question()
     {
-        return new CharacterQuestion(this.name);
+        return new CharacterQuestion("RobotKindCharacter");
     }
 }
+
+
+public class RobotKind : MonoBehaviour { }

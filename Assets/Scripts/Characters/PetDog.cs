@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Putin;
 
-public class PetDog : MonoBehaviour
+public class PetDogCharacter : Character
 {
-    public CharacterQuestion PetDogQuestion()
+    public PetDogCharacter() : base("Joy", "Pets") { }
+
+    public override CharacterQuestion Question()
     {
-        return new CharacterQuestion(this.name);
+        return new CharacterQuestion("PetDogCharacter");
     }
 }
+
+public class PetDog : MonoBehaviour { }

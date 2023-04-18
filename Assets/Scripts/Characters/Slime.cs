@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Putin;
 
-public class Slime : MonoBehaviour
+public class SlimeCharacter : Character
 {
-    public CharacterQuestion SlimeQuestion()
+    public SlimeCharacter() : base("Slime", "Galaxy") { }
+
+    public override CharacterQuestion Question()
     {
-        return new CharacterQuestion(this.name);
+        return new CharacterQuestion("SlimeCharacter");
     }
 }
+
+public class Slime : MonoBehaviour { }

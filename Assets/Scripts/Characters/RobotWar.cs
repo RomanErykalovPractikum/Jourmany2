@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Putin;
 
-public class RobotWar : MonoBehaviour
+
+public class RobotWarCharacter : Character
 {
-    public CharacterQuestion RobotWarQuestion()
+    public RobotWarCharacter() : base("Z14", "Robots") { }
+
+    public override CharacterQuestion Question()
     {
-        return new CharacterQuestion(this.name);
+        return new CharacterQuestion("RobotWarCharacter");
     }
 }
+
+public class RobotWar : MonoBehaviour { }
+

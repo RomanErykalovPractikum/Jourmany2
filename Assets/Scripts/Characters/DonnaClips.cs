@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Putin;
 
-public class DonnaClips : MonoBehaviour
+public class DonnaClipsCharacter : Character
 {
-    public CharacterQuestion DonnaClipsQuestion()
+    public DonnaClipsCharacter() : base("Donna Clips", "Gold Gloves") { }
+
+    public override CharacterQuestion Question()
     {
-        return new CharacterQuestion(this.name);
+        return new CharacterQuestion("DonnaClipsCharacter");
     }
 }
+
+public class DonnaClips : MonoBehaviour { }

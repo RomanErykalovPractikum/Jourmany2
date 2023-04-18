@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static Putin;
+
+
 
 public class Putin : MonoBehaviour
 {
@@ -41,23 +42,18 @@ public class Putin : MonoBehaviour
         public KingState kingState;
     }
 
-    public struct CharacterQuestion
-    {
-        public string questionString;
-        public CharacterQuestion (string questionString)
-        {
-            this.questionString = questionString;
-        }
-    }
-
-
-
     private const int HEROES_COUNT = 18;
-    public GameObject[] heroes = new GameObject[HEROES_COUNT];
+    public GameObject[] heroes = new GameObject[HEROES_COUNT]; //GameObject
+    public Character[] characters = new Character[HEROES_COUNT];  //Классы реализующие логику через виртуальные методы
+
     public GameObject buttonYes;
     public GameObject buttonNo;
     public GameObject buttonOk;
+    public GameObject buttonOk2;
+
     public GameObject mainText;
+    public GameObject name;
+    public GameObject union;
 
     public GameObject food;
     public GameObject money;
@@ -73,39 +69,31 @@ public class Putin : MonoBehaviour
 
     public GameObject kingState;
 
-    /*private Dictionary<int, string> indexHeroes = new Dictionary<int, string>()
-    {
-        [0] = "RobotKind",
-        [1] = "RobotSloppy",
-        [2] = "RobotWar",
-
-        [3] = "PetCat",
-        [4] = "PetDog",
-        [5] = "PetCatDog",
-
-        [6] = "GloveSnitch",
-        [7] = "GloveSand",
-        [8] = "GloveClips",
-
-        [9] = "WorkerLee",
-        [10] = "WorkerRight",
-        [11] = "WorkerHubris",
-
-        [12] = "GalaxyReptilian",
-        [13] = "GalaxiSlime",
-        [14] = "GalaxyKraken",
-
-        [15] = "DrPiff",
-        [16] = "DrBolt",
-        [17] = "DrPlot"
-    };*/
-    private GameObject hero;
     private int heroNumber;
     private GameState gameState;
     private List<int> heroesHistory = new List<int>();
 
     void Start()
     {
+        characters[0] = new RobotKindCharacter();
+        characters[1] = new RobotSloppyCharacter();
+        characters[2] = new RobotWarCharacter();
+        characters[3] = new PetCatCharacter();
+        characters[4] = new PetDogCharacter();
+        characters[5] = new PetCatDogCharacter();
+        characters[6] = new DonSnitchCharacter();
+        characters[7] = new DonSandCharacter();
+        characters[8] = new DonnaClipsCharacter();
+        characters[9] = new MrLeeCharacter();
+        characters[10] = new MrsRightCharacter();
+        characters[11] = new MrHubrisCharacter();
+        characters[12] = new ReptilianCharacter();
+        characters[13] = new SlimeCharacter();
+        characters[14] = new KrakenCharacter();
+        characters[15] = new DrPiffCharacter();
+        characters[16] = new DrBoltCharacter();
+        characters[17] = new DrPlotCharacter();
+
         gameState.food = gameState.money = gameState.techno = gameState.pollen = 10;
         gameState.workers = gameState.pets = gameState.robots = gameState.gloves = gameState.scientists = gameState.galaxy = 5;
         gameState.kingState = KingState.ok;
@@ -114,40 +102,62 @@ public class Putin : MonoBehaviour
         {
             hero.SetActive(false);
         }
+
         buttonYes.SetActive(false);
         buttonNo.SetActive(false);
         buttonOk.SetActive(false);
+        buttonOk2.SetActive(false);
+
+        UpdateGameStatus();
 
         Question();
     }
 
     public void Question()
     {
-        UpdateGameStatus();
         buttonOk.SetActive(false);
-        if (hero!=null) hero.SetActive(false);
+        buttonOk2.SetActive(false);
+        buttonYes.SetActive(true);
+        buttonNo.SetActive(true);
+
+        if (heroes[heroNumber] != null) heroes[heroNumber].SetActive(false);
 
         do
         {
             heroNumber = Random.Range(0, HEROES_COUNT);
             Debug.Log(heroNumber);
+            
         }
         while ((heroesHistory.Count != 0) && (heroesHistory[heroesHistory.Count - 1] == heroNumber));
 
         heroesHistory.Add(heroNumber);
-        hero = heroes[heroNumber];
-        hero.SetActive(true);
-        mainText.GetComponent<Text>().text = heroes[heroNumber].GetComponent<HeroScript>().Question(heroNumber).questionString;
-        buttonYes.SetActive(true);
-        buttonNo.SetActive(true);
+        heroes[heroNumber].SetActive(true);
+
+        name.GetComponent<Text>().text = characters[heroNumber].name;
+        union.GetComponent<Text>().text = characters[heroNumber].union;
+        mainText.GetComponent<Text>().text = characters[heroNumber].Question().questionString;
+
+
     }
 
     public void Answer(bool answer)
     {
         buttonYes.SetActive(false);
         buttonNo.SetActive(false);
-        mainText.GetComponent<Text>().text = heroes[heroNumber].GetComponent<HeroScript>().Answer(heroNumber, answer);
         buttonOk.SetActive(true);
+
+        mainText.GetComponent<Text>().text = characters[heroNumber].Answer(answer).answerString;
+
+    }
+
+    public void PostAnswer()
+    {
+        mainText.GetComponent<Text>().text = new PostAnswer("Вот и ладненько!").postAnswerString;
+
+        UpdateGameStatus();
+
+        buttonOk.SetActive(false);
+        buttonOk2.SetActive(true);
     }
 
     void UpdateGameStatus()

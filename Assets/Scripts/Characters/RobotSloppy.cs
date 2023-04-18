@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Putin;
 
-public class RobotSloppy : MonoBehaviour
+public class RobotSloppyCharacter : Character
 {
-    public CharacterQuestion RobotSloppyQuestion()
+    public RobotSloppyCharacter() : base("Intercom", "Robots") { }
+
+    public override CharacterQuestion Question()
     {
-        return new CharacterQuestion(this.name);
+        return new CharacterQuestion("RobotSloppyCharacter");
     }
 }
+
+public class RobotSloppy : MonoBehaviour { }

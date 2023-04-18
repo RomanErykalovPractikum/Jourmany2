@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Putin;
 
-public class Reptilian : MonoBehaviour
+public class ReptilianCharacter : Character
 {
-    public CharacterQuestion ReptilianQuestion()
+    public ReptilianCharacter() : base("Zakhrsh", "Galaxy") { }
+
+    public override CharacterQuestion Question()
     {
-        return new CharacterQuestion(this.name);
+        return new CharacterQuestion("ReptilianCharacter");
     }
 }
+
+public class Reptilian : MonoBehaviour { }

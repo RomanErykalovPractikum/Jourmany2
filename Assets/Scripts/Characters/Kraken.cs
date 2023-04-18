@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Putin;
 
-public class Kraken : MonoBehaviour
+public class KrakenCharacter : Character
 {
-    public CharacterQuestion KrakenQuestion()
+    public KrakenCharacter() : base("Kraken", "Galaxy") { }
+
+    public override CharacterQuestion Question()
     {
-        return new CharacterQuestion(this.name);
+        return new CharacterQuestion("KrakenCharacter");
     }
 }
+
+public class Kraken : MonoBehaviour { }
