@@ -7,21 +7,7 @@ using UnityEngine.UI;
 
 public class Putin : MonoBehaviour
 {
-    public enum KingState
-    {
-        ok, war, sick, epidemy, madness, delight, revolt
-    }
-    private Dictionary<KingState, string> conditionString = new Dictionary<KingState, string>()
-    {
-        [KingState.ok] = "Отлично",
-        [KingState.war] = "Война",
-        [KingState.sick] = "Болезнь",
-        [KingState.epidemy] = "Эпидемия",
-        [KingState.madness] = "Безумие",
-        [KingState.delight] = "Восторг",
-        [KingState.revolt] = "Бунт",
-    };
-
+  
     public struct GameState
     {
         //resources
@@ -39,7 +25,8 @@ public class Putin : MonoBehaviour
         public int galaxy;
 
         //KingState
-        public KingState kingState;
+        public string kingState;
+        public List<string> govermentStateList;
     }
 
     private const int HEROES_COUNT = 18;
@@ -68,6 +55,7 @@ public class Putin : MonoBehaviour
     public GameObject galaxy;
 
     public GameObject kingState;
+    public GameObject govermentState;
 
     private int heroNumber;
     private GameState gameState;
@@ -96,7 +84,11 @@ public class Putin : MonoBehaviour
 
         gameState.food = gameState.money = gameState.techno = gameState.pollen = 10;
         gameState.workers = gameState.pets = gameState.robots = gameState.gloves = gameState.scientists = gameState.galaxy = 5;
-        gameState.kingState = KingState.ok;
+        gameState.kingState = "Ok";
+        gameState.govermentStateList = new List<string>();
+        gameState.govermentStateList.Add("Эпидемия");
+        gameState.govermentStateList.Add("Война");
+        gameState.govermentStateList.Add("Бунт");
 
         foreach (GameObject hero in heroes)
         {
@@ -120,7 +112,7 @@ public class Putin : MonoBehaviour
         buttonYes.SetActive(true);
         buttonNo.SetActive(true);
 
-        if (heroes[heroNumber] != null) heroes[heroNumber].SetActive(false);
+        heroes[heroNumber].SetActive(false);
 
         do
         {
@@ -174,7 +166,26 @@ public class Putin : MonoBehaviour
         scientists.GetComponent<Text>().text = gameState.scientists.ToString();
         galaxy.GetComponent<Text>().text = gameState.galaxy.ToString();
 
-        kingState.GetComponent<Text>().text = conditionString[gameState.kingState];
+        kingState.GetComponent<Text>().text = gameState.kingState;
+        govermentState.GetComponent<Text>().text = GetGovermentStateString();
+    }
+
+    string GetGovermentStateString()
+    {
+        string returnString = "";
+        if (gameState.govermentStateList.Count == 0)
+        {
+            return "Стабильность";
+        }
+        else
+        {
+            foreach (string s in gameState.govermentStateList)
+            {
+                returnString += s+" ";
+            }
+            return returnString.Trim();
+        }
+
     }
 }
 
