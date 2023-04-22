@@ -6,7 +6,7 @@ using static Putin;
 
 public class RobotWarCharacter : Character
 {
-    public RobotWarCharacter() : base("Z14", "Robots") { }
+    public RobotWarCharacter() : base("Z14", "Robots", 3) { }
 
     public override CharacterQuestion Question()
     {

@@ -5,7 +5,7 @@ using static Putin;
 
 public class MrHubrisCharacter : Character
 {
-    public MrHubrisCharacter() : base("Mr Hubris", "Trade Union") { }
+    public MrHubrisCharacter() : base("Mr Hubris", "Trade Union", 3) { }
 
     public override CharacterQuestion Question()
     {

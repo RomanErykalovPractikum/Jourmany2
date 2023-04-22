@@ -6,27 +6,30 @@ using UnityEngine;
 
 
 //Global
-public class Character
+abstract public class Character
 {
-    public string name;
+    protected int id;
+    protected string stage;
+    
+
+    public string characterName;
     public string union;
 
-    //проба пера
-    public int questNumber;
-    public int nextStage = 0b01;
-    //
+    private int numberOfQuests;
+    protected List<int> freshQuestIdStack = new List<int>(); // !!!!!!!!!!!!!!! Если король заболел то с долей вероятности выполняем лечение но не меняем id и stage отогда скрипт продолжится
 
-    public Character (string name, string union)
+    public Character (string characterName, string union, int numberOfQuests)
     {
-        this.name = name;
+        this.characterName = characterName;
         this.union = union; 
+        this.numberOfQuests = numberOfQuests;
+        id = -1;
+        stage = "";
+        for (int i = 0; i < numberOfQuests; i++) { freshQuestIdStack.Add(i); }
     }
 
     public virtual CharacterQuestion Question()
     {
-        ///проба пера
-        DefineQuest(); //либо новый либо взять нужную стадию, квест с камнем всегда первый!!!!
-        //
         return new CharacterQuestion("Ошибка! Ответ из базового класса");
     }
 
@@ -34,50 +37,15 @@ public class Character
     {
         if (answer) 
         {
-            //проба пера
-            NextStudyQuestOrFinish();//если финиш удаляем квест из
-            //
             return new CharacterAnswer("Ошибка! Ответ ДА из базового класса");
         }
         else
         {
-            //проба пера
-            NextStudyQuestOrFinish();
-            //
             return new CharacterAnswer("Ошибка! Ответ НЕТ из базового класса");
         }
     }
 
-    //проба пера
-    public struct QuestReaction
-    {
-        int temp; //??????? 
-    }
-
-    public struct QuestFormula //next behavior in the "pool"
-    {
-        int temp; //??????? 
-    }
-
-    public struct QuestStruct
-    {
-        public int id;
-        public string question;
-        public string answerYes;
-        public string answerNo;
-        public QuestFormula questFormulaYes;
-        public QuestFormula questFormulaNo;
-        public QuestReaction questReactionYes;
-        public QuestReaction questReactionNo;
-    }
-
-    public List<QuestStruct> allCharacterQuests = new List<QuestStruct>(1); //добавить!!!
-
-    public void DefineQuest() { }
-    public void NextStudyQuestOrFinish() { }
-    public void InitAllQuests(string s) { } //берем из файла записваем по очереди в allQuests
-    //
-}
+  }
 
 public struct CharacterQuestion
 {

@@ -5,7 +5,7 @@ using static Putin;
 
 public class KrakenCharacter : Character
 {
-    public KrakenCharacter() : base("Kraken", "Galaxy") { }
+    public KrakenCharacter() : base("Kraken", "Galaxy", 3) { }
 
     public override CharacterQuestion Question()
     {

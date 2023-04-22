@@ -1470,50 +1470,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c30ff95a85f35946a6cf14dfc140a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &409945786
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 409945788}
-  - component: {fileID: 409945787}
-  m_Layer: 0
-  m_Name: TestIO
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &409945787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 409945786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99de83dedbedaa240b682e5520a9698f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  relativeFilePath: TextFiles/Quests.txt
---- !u!4 &409945788
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 409945786}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3417326, y: 2.3753872, z: 627.9724}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &419649343
 GameObject:
   m_ObjectHideFlags: 0
@@ -4176,7 +4132,7 @@ MonoBehaviour:
   buttonOk: {fileID: 1479914020}
   buttonOk2: {fileID: 640621855}
   mainText: {fileID: 359876876}
-  name: {fileID: 2115411173}
+  characterName: {fileID: 2115411173}
   union: {fileID: 282660126}
   food: {fileID: 269770466}
   money: {fileID: 1940968269}
@@ -5370,7 +5326,7 @@ GameObject:
   - component: {fileID: 2115411176}
   - component: {fileID: 2115411175}
   m_Layer: 5
-  m_Name: Name
+  m_Name: CharacterName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

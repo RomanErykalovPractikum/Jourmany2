@@ -39,7 +39,7 @@ public class Putin : MonoBehaviour
     public GameObject buttonOk2;
 
     public GameObject mainText;
-    public GameObject name;
+    public GameObject characterName;
     public GameObject union;
 
     public GameObject food;
@@ -122,10 +122,11 @@ public class Putin : MonoBehaviour
         }
         while ((heroesHistory.Count != 0) && (heroesHistory[heroesHistory.Count - 1] == heroNumber));
 
+        heroNumber = 0; //DELETE
         heroesHistory.Add(heroNumber);
         heroes[heroNumber].SetActive(true);
 
-        name.GetComponent<Text>().text = characters[heroNumber].name;
+        characterName.GetComponent<Text>().text = characters[heroNumber].characterName;
         union.GetComponent<Text>().text = characters[heroNumber].union;
         mainText.GetComponent<Text>().text = characters[heroNumber].Question().questionString;
 
@@ -144,7 +145,7 @@ public class Putin : MonoBehaviour
 
     public void PostAnswer()
     {
-        mainText.GetComponent<Text>().text = new PostAnswer("Вот и ладненько!").postAnswerString;
+        mainText.GetComponent<Text>().text = new PostAnswer("Дело сделано!").postAnswerString;
 
         UpdateGameStatus();
 
