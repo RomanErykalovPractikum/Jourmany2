@@ -7,9 +7,9 @@ public class DrPiffCharacter : Character
 {
     public DrPiffCharacter() : base("Dr Piff", "Scientists", 3) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        return new CharacterQuestion("DrPiffCharacter");
+        return new CharacterQuestionStruct("DrPiffCharacter");
     }
 }
 

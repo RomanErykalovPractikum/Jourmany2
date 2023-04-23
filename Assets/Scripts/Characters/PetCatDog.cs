@@ -7,9 +7,9 @@ public class PetCatDogCharacter : Character
 {
     public PetCatDogCharacter() : base("Lucy and Buddy", "Pets", 3) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        return new CharacterQuestion("PetCatDogCharacter");
+        return new CharacterQuestionStruct("PetCatDogCharacter");
     }
 }
 

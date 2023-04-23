@@ -7,9 +7,9 @@ public class DonSandCharacter : Character
 {
     public DonSandCharacter() : base("Don Sand", "Gold Gloves", 3) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        return new CharacterQuestion("DonSandCharacter");
+        return new CharacterQuestionStruct("DonSandCharacter");
     }
 }
 

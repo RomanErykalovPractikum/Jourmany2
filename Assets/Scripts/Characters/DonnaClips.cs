@@ -7,9 +7,9 @@ public class DonnaClipsCharacter : Character
 {
     public DonnaClipsCharacter() : base("Donna Clips", "Gold Gloves", 3) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        return new CharacterQuestion("DonnaClipsCharacter");
+        return new CharacterQuestionStruct("DonnaClipsCharacter");
     }
 }
 

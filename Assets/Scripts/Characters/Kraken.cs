@@ -7,9 +7,9 @@ public class KrakenCharacter : Character
 {
     public KrakenCharacter() : base("Kraken", "Galaxy", 3) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        return new CharacterQuestion("KrakenCharacter");
+        return new CharacterQuestionStruct("KrakenCharacter");
     }
 }
 

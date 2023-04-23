@@ -6,13 +6,31 @@ using static Putin;
 
 public class RobotKindCharacter : Character
 {
+    //-------------------------
+    string Q0 = "Люди лучше всех остаьных?";
+        string A0Y = "Люди рады вашему решению, хотя не все на этой планете человечечкой расы";
+        DiffGameStateStruct D0Y = new DiffGameStateStruct (0, 0, 0, 0, /**/ 1, -1, -1, 1, 1, -1 /**/, 0, 0, 0, /**/ 0, 0, 0);
+        string A0N = "Представители других планет танцуют, даже домашние питомцы не рычат на роботов";
+        DiffGameStateStruct D0N = new DiffGameStateStruct(0, 0, 0, 0, /**/ -1, 1, 1, -1, -1, 1 /**/, 0, 0, 0, /**/ 0, 0, 0);
+    string Q1Y = "К вам рришли роботы. Че за фигня? Ты должен быть за нас";
+        string A0YY = "Роботы довольны";
+        DiffGameStateStruct D0YY = new DiffGameStateStruct(0, 0, 0, 0, /**/ -1, 1, 1, -1, -1, 1 /**/, 0, 0, 0, /**/ 0, 0, 0);
+        string A0YN = "Роботы будут бунтовать";
+        DiffGameStateStruct D0YN = new DiffGameStateStruct (0, 0, 0, 0, /**/ 1, -1, -1, 1, 1, -1 /**/, 0, 0, 0, /**/ 0, 0, 0);
+    string Q1N = "К вам рришли люди. Че за фигня?Ты должен быть за нас";
+        string A0NY = "Люди довольны";
+        DiffGameStateStruct D0NY = new DiffGameStateStruct (0, 0, 0, 0, /**/ 1, -1, -1, 1, 1, -1 /**/, 0, 0, 0, /**/ 0, 0, 0);
+        string A0NN = "Люди будут бунтовать";
+        DiffGameStateStruct D0NN = new DiffGameStateStruct(0, 0, 0, 0, /**/ -1, 1, 1, -1, -1, 1 /**/, 0, 0, 0, /**/ 0, 0, 0);
+    //------------------------
+
     public RobotKindCharacter() : base("Alice", "Robots", 1) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        if (freshQuestIdStack.Count == 0) return new CharacterQuestion("У этого героя нет квестов");
+        if (freshQuestIdStack.Count == 0) return new CharacterQuestionStruct("У этого героя нет квестов");
 
-        if (id == -1)
+        if (id == -1) //если квестов не назначено
         {
             id = Random.Range(0, freshQuestIdStack.Count);
         };
@@ -22,22 +40,23 @@ public class RobotKindCharacter : Character
             case 0:
                 switch (stage)
                 {
-                    case "":
-                        return new CharacterQuestion("Люди лучше всех остаьных?");
-                    case "Y":
-                        return new CharacterQuestion("К вам рришли роботы. Че за фигня? Ты должен быть за нас");
-                    case "N":
-                        return new CharacterQuestion("К вам рришли люди. Че за фигня?Ты должен быть за нас");
+                    case "": return new CharacterQuestionStruct(Q0);
+
+                    case "Y": return new CharacterQuestionStruct(Q1Y);
+
+                    case "N": return new CharacterQuestionStruct(Q1N);
+
                     default:
-                        return new CharacterQuestion("Ошибка неправильный stage");
+                        Debug.LogError("Неправильный stage");
+                        return new CharacterQuestionStruct("Ошибка неправильный stage в Question");
                 }
             default:
-                return new CharacterQuestion("Ошибка неправильный id");
+                Debug.LogError("Неправильный id");
+                return new CharacterQuestionStruct("Ошибка неправильный id в Question");
         }
     }
 
-
-    public override CharacterAnswer Answer(bool answer)
+    public override CharacterAnswerStruct Answer(bool answer)
     {
         switch (id)
         {
@@ -45,47 +64,28 @@ public class RobotKindCharacter : Character
                 switch (stage)
                 {
                     case "":
-                        if (answer)
-                        {
-                            stage = "Y";
-                            return new CharacterAnswer("Люди рады вашему решению, хотя не все на этой планете человечечкой расы");
-                        }
-                        else
-                        {
-                            stage = "N";
-                            return new CharacterAnswer("Представители других планет танцуют, даже домашние питомцы не рычат на роботов");
-                        }
+                        if (answer) { stage = "Y"; return new CharacterAnswerStruct(A0Y, D0Y); }
+                        else { stage = "N"; return new CharacterAnswerStruct(A0N, D0N); }
+
                     case "Y":
-                        if (answer)
-                        {
-                            freshQuestIdStack.Remove(id);
-                            id = -1;
-                            return new CharacterAnswer("Роботы довольны");
-                        }
-                        else
-                        {
-                            freshQuestIdStack.Remove(id);
-                            id = -1;
-                            return new CharacterAnswer("Роботы будут бунтовать");
-                        }
+                        freshQuestIdStack.Remove(id);
+                        id = -1;
+                        if (answer) { return new CharacterAnswerStruct(A0YY, D0YY); }
+                        else { return new CharacterAnswerStruct(A0YN, D0YN); }
+
                     case "N":
-                        if (answer)
-                        {
-                            freshQuestIdStack.Remove(id);
-                            id = -1;
-                            return new CharacterAnswer("Люди довольны");
-                        }
-                        else
-                        {
-                            freshQuestIdStack.Remove(id);
-                            id = -1;
-                            return new CharacterAnswer("Люди будут бунтовать");
-                        }
+                        freshQuestIdStack.Remove(id);
+                        id = -1;
+                        if (answer) { return new CharacterAnswerStruct(A0NY, D0NY); }
+                        else { return new CharacterAnswerStruct(A0NN, D0NN); }
+
                     default:
-                        return new CharacterAnswer("Ошибка неправильный stage");
+                        Debug.LogError("Неправильный stage");
+                        return new CharacterAnswerStruct("Ошибка неправильный stage в Answer", ERROR_DIFF_GAME_STATUS);
                 }
             default:
-                return new CharacterAnswer("Ошибка неправильный id");
+                Debug.LogError("Неправильный id");
+                return new CharacterAnswerStruct("Ошибка неправильный id в Answer", ERROR_DIFF_GAME_STATUS);
         }
         
     }

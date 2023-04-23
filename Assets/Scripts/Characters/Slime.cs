@@ -7,9 +7,9 @@ public class SlimeCharacter : Character
 {
     public SlimeCharacter() : base("Slime", "Galaxy", 3) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        return new CharacterQuestion("SlimeCharacter");
+        return new CharacterQuestionStruct("SlimeCharacter");
     }
 }
 

@@ -7,9 +7,9 @@ public class ReptilianCharacter : Character
 {
     public ReptilianCharacter() : base("Zakhrsh", "Galaxy", 3) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        return new CharacterQuestion("ReptilianCharacter");
+        return new CharacterQuestionStruct("ReptilianCharacter");
     }
 }
 

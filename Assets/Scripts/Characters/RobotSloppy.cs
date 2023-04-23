@@ -7,9 +7,9 @@ public class RobotSloppyCharacter : Character
 {
     public RobotSloppyCharacter() : base("Intercom", "Robots", 3) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        return new CharacterQuestion("RobotSloppyCharacter");
+        return new CharacterQuestionStruct("RobotSloppyCharacter");
     }
 }
 

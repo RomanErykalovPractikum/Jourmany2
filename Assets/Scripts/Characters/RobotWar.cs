@@ -8,9 +8,9 @@ public class RobotWarCharacter : Character
 {
     public RobotWarCharacter() : base("Z14", "Robots", 3) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        return new CharacterQuestion("RobotWarCharacter");
+        return new CharacterQuestionStruct("RobotWarCharacter");
     }
 }
 

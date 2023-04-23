@@ -7,9 +7,9 @@ public class MrHubrisCharacter : Character
 {
     public MrHubrisCharacter() : base("Mr Hubris", "Trade Union", 3) { }
 
-    public override CharacterQuestion Question()
+    public override CharacterQuestionStruct Question()
     {
-        return new CharacterQuestion("MrHubrisCharacter");
+        return new CharacterQuestionStruct("MrHubrisCharacter");
     }
 }
 

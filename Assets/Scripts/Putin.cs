@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Putin : MonoBehaviour
 {
-  
+
     public struct GameState
     {
         //resources
@@ -49,8 +49,8 @@ public class Putin : MonoBehaviour
 
     public GameObject workers;
     public GameObject pets;
-    public GameObject robots;   
-    public GameObject gloves;   
+    public GameObject robots;
+    public GameObject gloves;
     public GameObject scientists;
     public GameObject galaxy;
 
@@ -60,6 +60,10 @@ public class Putin : MonoBehaviour
     private int heroNumber;
     private GameState gameState;
     private List<int> heroesHistory = new List<int>();
+
+    CharacterAnswerStruct answerFromCharacter; //структура ответа от перса присутсвует в Answer PostAnswer
+
+
 
     void Start()
     {
@@ -118,7 +122,7 @@ public class Putin : MonoBehaviour
         {
             heroNumber = Random.Range(0, HEROES_COUNT);
             Debug.Log(heroNumber);
-            
+
         }
         while ((heroesHistory.Count != 0) && (heroesHistory[heroesHistory.Count - 1] == heroNumber));
 
@@ -139,19 +143,41 @@ public class Putin : MonoBehaviour
         buttonNo.SetActive(false);
         buttonOk.SetActive(true);
 
-        mainText.GetComponent<Text>().text = characters[heroNumber].Answer(answer).answerString;
+        answerFromCharacter = characters[heroNumber].Answer(answer);
+        mainText.GetComponent<Text>().text = answerFromCharacter.answerString;
 
     }
 
     public void PostAnswer()
     {
-        mainText.GetComponent<Text>().text = new PostAnswer("Дело сделано!").postAnswerString;
+        mainText.GetComponent<Text>().text = new PostAnswerStruct("Дело сделано!").postAnswerString;
 
+        PostProcessAnswerFromCharacter();
         UpdateGameStatus();
 
         buttonOk.SetActive(false);
         buttonOk2.SetActive(true);
     }
+
+    private void PostProcessAnswerFromCharacter()
+    {
+        //resources
+        gameState.food += answerFromCharacter.diffGameState.diffFood;
+        gameState.money += answerFromCharacter.diffGameState.diffMoney;
+        gameState.techno += answerFromCharacter.diffGameState.diffTechno;
+        gameState.pollen += answerFromCharacter.diffGameState.diffPollen;
+        //union
+        gameState.workers += answerFromCharacter.diffGameState.diffWorkers;
+        gameState.pets += answerFromCharacter.diffGameState.diffPets;
+        gameState.robots += answerFromCharacter.diffGameState.diffRobots;
+        gameState.gloves += answerFromCharacter.diffGameState.diffGloves;
+        gameState.scientists += answerFromCharacter.diffGameState.diffScientists;
+        gameState.galaxy += answerFromCharacter.diffGameState.diffGalaxy;
+        //king state
+        //goverment state
+        //!!!!!!!!!!!!! Доделать
+    }
+
 
     void UpdateGameStatus()
     {
