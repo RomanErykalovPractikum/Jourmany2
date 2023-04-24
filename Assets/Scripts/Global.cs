@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -14,7 +14,7 @@ abstract public class Character
     public string union;
 
     private int numberOfQuests;
-    protected List<int> freshQuestIdStack = new List<int>(); // !!!!!!!!!!!!!!! Если король заболел то с долей вероятности выполняем лечение но не меняем id и stage отогда скрипт продолжится
+    protected List<int> freshQuestIdStack = new List<int>(); // !!!!!!!!!!!!!!! Р•СЃР»Рё РєРѕСЂРѕР»СЊ Р·Р°Р±РѕР»РµР» С‚Рѕ СЃ РґРѕР»РµР№ РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё РІС‹РїРѕР»РЅСЏРµРј Р»РµС‡РµРЅРёРµ РЅРѕ РЅРµ РјРµРЅСЏРµРј id Рё stage РѕС‚РѕРіРґР° СЃРєСЂРёРїС‚ РїСЂРѕРґРѕР»Р¶РёС‚СЃСЏ
     protected string path;
 
     //const
@@ -32,21 +32,21 @@ abstract public class Character
 
     public virtual CharacterQuestionStruct Question()
     {
-        Debug.LogError("Ошибка! Ответ из базового класса");
-        return new CharacterQuestionStruct("Ошибка! Ответ из базового класса");
+        Debug.LogError("РћС€РёР±РєР°! РћС‚РІРµС‚ РёР· Р±Р°Р·РѕРІРѕРіРѕ РєР»Р°СЃСЃР°");
+        return new CharacterQuestionStruct("РћС€РёР±РєР°! РћС‚РІРµС‚ РёР· Р±Р°Р·РѕРІРѕРіРѕ РєР»Р°СЃСЃР°");
     }
 
     public virtual CharacterAnswerStruct Answer(bool answer)
     {
         if (answer) 
         {
-            Debug.LogError("Ошибка! Ответ из базового класса");
-            return new CharacterAnswerStruct("Ошибка! Ответ ДА из базового класса", ERROR_DIFF_GAME_STATUS);
+            Debug.LogError("РћС€РёР±РєР°! РћС‚РІРµС‚ РёР· Р±Р°Р·РѕРІРѕРіРѕ РєР»Р°СЃСЃР°");
+            return new CharacterAnswerStruct("РћС€РёР±РєР°! РћС‚РІРµС‚ Р”Рђ РёР· Р±Р°Р·РѕРІРѕРіРѕ РєР»Р°СЃСЃР°", ERROR_DIFF_GAME_STATUS);
         }
         else
         {
-            Debug.LogError("Ошибка! Ответ из базового класса");
-            return new CharacterAnswerStruct("Ошибка! Ответ НЕТ из базового класса", ERROR_DIFF_GAME_STATUS);
+            Debug.LogError("РћС€РёР±РєР°! РћС‚РІРµС‚ РёР· Р±Р°Р·РѕРІРѕРіРѕ РєР»Р°СЃСЃР°");
+            return new CharacterAnswerStruct("РћС€РёР±РєР°! РћС‚РІРµС‚ РќР•Рў РёР· Р±Р°Р·РѕРІРѕРіРѕ РєР»Р°СЃСЃР°", ERROR_DIFF_GAME_STATUS);
         }
     }
 
@@ -90,7 +90,7 @@ public struct DiffGameStateStruct
     public int diffGalaxy;
 
     //king state
-    public int diffKingSick; // -1 заболел, 0 не менять, +1 выздоровел
+    public int diffKingSick; // -1 Р·Р°Р±РѕР»РµР», 0 РЅРµ РјРµРЅСЏС‚СЊ, +1 РІС‹Р·РґРѕСЂРѕРІРµР»
     public int diffKingMadness;
     public int diffKingDelight;
 

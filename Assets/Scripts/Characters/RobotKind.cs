@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using System.Xml.Schema;
 using UnityEngine;
@@ -7,20 +7,20 @@ using static Putin;
 public class RobotKindCharacter : Character
 {
     //-------------------------
-    string Q0 = "Люди лучше всех остаьных?";
-        string A0Y = "Люди рады вашему решению, хотя не все на этой планете человечечкой расы";
+    string Q0 = "Р›СЋРґРё Р»СѓС‡С€Рµ РІСЃРµС… РѕСЃС‚Р°СЊРЅС‹С…?";
+        string A0Y = "Р›СЋРґРё СЂР°РґС‹ РІР°С€РµРјСѓ СЂРµС€РµРЅРёСЋ, С…РѕС‚СЏ РЅРµ РІСЃРµ РЅР° СЌС‚РѕР№ РїР»Р°РЅРµС‚Рµ С‡РµР»РѕРІРµС‡РµС‡РєРѕР№ СЂР°СЃС‹";
         DiffGameStateStruct D0Y = new DiffGameStateStruct (0, 0, 0, 0, /**/ 1, -1, -1, 1, 1, -1 /**/, 0, 0, 0, /**/ 0, 0, 0);
-        string A0N = "Представители других планет танцуют, даже домашние питомцы не рычат на роботов";
+        string A0N = "РџСЂРµРґСЃС‚Р°РІРёС‚РµР»Рё РґСЂСѓРіРёС… РїР»Р°РЅРµС‚ С‚Р°РЅС†СѓСЋС‚, РґР°Р¶Рµ РґРѕРјР°С€РЅРёРµ РїРёС‚РѕРјС†С‹ РЅРµ СЂС‹С‡Р°С‚ РЅР° СЂРѕР±РѕС‚РѕРІ";
         DiffGameStateStruct D0N = new DiffGameStateStruct(0, 0, 0, 0, /**/ -1, 1, 1, -1, -1, 1 /**/, 0, 0, 0, /**/ 0, 0, 0);
-    string Q1Y = "К вам рришли роботы. Че за фигня? Ты должен быть за нас";
-        string A0YY = "Роботы довольны";
+    string Q1Y = "Рљ РІР°Рј СЂСЂРёС€Р»Рё СЂРѕР±РѕС‚С‹. Р§Рµ Р·Р° С„РёРіРЅСЏ? РўС‹ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Р·Р° РЅР°СЃ";
+        string A0YY = "Р РѕР±РѕС‚С‹ РґРѕРІРѕР»СЊРЅС‹";
         DiffGameStateStruct D0YY = new DiffGameStateStruct(0, 0, 0, 0, /**/ -1, 1, 1, -1, -1, 1 /**/, 0, 0, 0, /**/ 0, 0, 0);
-        string A0YN = "Роботы будут бунтовать";
+        string A0YN = "Р РѕР±РѕС‚С‹ Р±СѓРґСѓС‚ Р±СѓРЅС‚РѕРІР°С‚СЊ";
         DiffGameStateStruct D0YN = new DiffGameStateStruct (0, 0, 0, 0, /**/ 1, -1, -1, 1, 1, -1 /**/, 0, 0, 0, /**/ 0, 0, 0);
-    string Q1N = "К вам рришли люди. Че за фигня?Ты должен быть за нас";
-        string A0NY = "Люди довольны";
+    string Q1N = "Рљ РІР°Рј СЂСЂРёС€Р»Рё Р»СЋРґРё. Р§Рµ Р·Р° С„РёРіРЅСЏ?РўС‹ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Р·Р° РЅР°СЃ";
+        string A0NY = "Р›СЋРґРё РґРѕРІРѕР»СЊРЅС‹";
         DiffGameStateStruct D0NY = new DiffGameStateStruct (0, 0, 0, 0, /**/ 1, -1, -1, 1, 1, -1 /**/, 0, 0, 0, /**/ 0, 0, 0);
-        string A0NN = "Люди будут бунтовать";
+        string A0NN = "Р›СЋРґРё Р±СѓРґСѓС‚ Р±СѓРЅС‚РѕРІР°С‚СЊ";
         DiffGameStateStruct D0NN = new DiffGameStateStruct(0, 0, 0, 0, /**/ -1, 1, 1, -1, -1, 1 /**/, 0, 0, 0, /**/ 0, 0, 0);
     //------------------------
 
@@ -28,9 +28,9 @@ public class RobotKindCharacter : Character
 
     public override CharacterQuestionStruct Question()
     {
-        if (freshQuestIdStack.Count == 0) return new CharacterQuestionStruct("У этого героя нет квестов");
+        if (freshQuestIdStack.Count == 0) return new CharacterQuestionStruct("РЈ СЌС‚РѕРіРѕ РіРµСЂРѕСЏ РЅРµС‚ РєРІРµСЃС‚РѕРІ");
 
-        if (id == -1) //если квестов не назначено
+        if (id == -1) //РµСЃР»Рё РєРІРµСЃС‚РѕРІ РЅРµ РЅР°Р·РЅР°С‡РµРЅРѕ
         {
             id = Random.Range(0, freshQuestIdStack.Count);
         };
@@ -47,12 +47,12 @@ public class RobotKindCharacter : Character
                     case "N": return new CharacterQuestionStruct(Q1N);
 
                     default:
-                        Debug.LogError("Неправильный stage");
-                        return new CharacterQuestionStruct("Ошибка неправильный stage в Question");
+                        Debug.LogError("РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ stage");
+                        return new CharacterQuestionStruct("РћС€РёР±РєР° РЅРµРїСЂР°РІРёР»СЊРЅС‹Р№ stage РІ Question");
                 }
             default:
-                Debug.LogError("Неправильный id");
-                return new CharacterQuestionStruct("Ошибка неправильный id в Question");
+                Debug.LogError("РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ id");
+                return new CharacterQuestionStruct("РћС€РёР±РєР° РЅРµРїСЂР°РІРёР»СЊРЅС‹Р№ id РІ Question");
         }
     }
 
@@ -80,12 +80,12 @@ public class RobotKindCharacter : Character
                         else { return new CharacterAnswerStruct(A0NN, D0NN); }
 
                     default:
-                        Debug.LogError("Неправильный stage");
-                        return new CharacterAnswerStruct("Ошибка неправильный stage в Answer", ERROR_DIFF_GAME_STATUS);
+                        Debug.LogError("РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ stage");
+                        return new CharacterAnswerStruct("РћС€РёР±РєР° РЅРµРїСЂР°РІРёР»СЊРЅС‹Р№ stage РІ Answer", ERROR_DIFF_GAME_STATUS);
                 }
             default:
-                Debug.LogError("Неправильный id");
-                return new CharacterAnswerStruct("Ошибка неправильный id в Answer", ERROR_DIFF_GAME_STATUS);
+                Debug.LogError("РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ id");
+                return new CharacterAnswerStruct("РћС€РёР±РєР° РЅРµРїСЂР°РІРёР»СЊРЅС‹Р№ id РІ Answer", ERROR_DIFF_GAME_STATUS);
         }
         
     }
