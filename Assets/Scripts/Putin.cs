@@ -44,10 +44,10 @@ public class Putin : MonoBehaviour
         public override string ToString()
         {
             string s = "";
-            if ( Ok() ) return "Ok";
-            if ( sick ) s += "Sick ";
-            if ( madness) s += "Madness ";
-            if ( delight ) s += "Delight ";
+            if ( Ok() ) return "ОК";
+            if ( sick ) s += "Болен ";
+            if ( madness) s += "Безумен ";
+            if ( delight ) s += "Восторг ";
             return s.Trim();
 
         }
@@ -67,10 +67,10 @@ public class Putin : MonoBehaviour
         public override string ToString()
         {
             string s = "";
-            if ( Ok() ) return "Stability";
-            if ( war ) s += "War ";
-            if ( epidemy ) s += "Epidemy ";
-            if ( revolt) s += "Revolt ";
+            if ( Ok() ) return "ОК";
+            if ( war ) s += "Война ";
+            if ( epidemy ) s += "Эпидемия ";
+            if ( revolt) s += "Бунт ";
             return s.Trim();
 
         }
@@ -110,7 +110,8 @@ public class Putin : MonoBehaviour
     private GameState gameState;
     private List<int> heroesHistory = new List<int>();
 
-    CharacterAnswerStruct answerFromCharacter; //структура ответа от перса присутсвует в Answer PostAnswer
+    CharacterAnswerStruct answerFromCharacter; //структура ответа от перса присутсвует в Answer 
+    List<string> postAnswerList = new List<string>(); //доделать смотри ниже 
 
     void Start()
     {
@@ -194,10 +195,12 @@ public class Putin : MonoBehaviour
 
     public void PostAnswer()
     {
-        mainText.GetComponent<Text>().text = new PostAnswerStruct("Дело сделано!").postAnswerString;
+        mainText.GetComponent<Text>().text = new PostAnswerStruct("Дело сделано!").postAnswerString; // потом убрать
 
         PostProcessAnswerFromCharacter();
         UpdateGameStatus();
+        PreparePostAnswer();
+
 
         buttonOk.SetActive(false);
         buttonOk2.SetActive(true);
@@ -205,21 +208,47 @@ public class Putin : MonoBehaviour
 
     private void PostProcessAnswerFromCharacter()
     {
+        //обнуляем
+        postAnswerList.Clear();
         //resources
         gameState.food += answerFromCharacter.diffGameState.diffFood;
+        if (answerFromCharacter.diffGameState.diffFood > 0) postAnswerList.Add("Пищи стало больше: +" + answerFromCharacter.diffGameState.diffFood);
+        if(answerFromCharacter.diffGameState.diffFood < 0) postAnswerList.Add("Запасы еды уменьшаются: " + answerFromCharacter.diffGameState.diffFood);
         gameState.money += answerFromCharacter.diffGameState.diffMoney;
+        if (answerFromCharacter.diffGameState.diffMoney > 0) postAnswerList.Add("Доходы выросли: +" + answerFromCharacter.diffGameState.diffMoney);
+        if (answerFromCharacter.diffGameState.diffMoney < 0) postAnswerList.Add("Расходы возросли: " + answerFromCharacter.diffGameState.diffMoney);
         gameState.techno += answerFromCharacter.diffGameState.diffTechno;
+        if (answerFromCharacter.diffGameState.diffTechno > 0) postAnswerList.Add("Технологии идут вперед: +" + answerFromCharacter.diffGameState.diffTechno);
+        if (answerFromCharacter.diffGameState.diffTechno < 0) postAnswerList.Add("Технологии отстают в развитии: " + answerFromCharacter.diffGameState.diffTechno);
         gameState.pollen += answerFromCharacter.diffGameState.diffPollen;
+        if (answerFromCharacter.diffGameState.diffPollen > 0) postAnswerList.Add("Пополнение запасов пыльцы: +" + answerFromCharacter.diffGameState.diffPollen);
+        if (answerFromCharacter.diffGameState.diffPollen < 0) postAnswerList.Add("Сокращение запасов пыльцы : " + answerFromCharacter.diffGameState.diffPollen);//Синоним уменьшилось
         //union
         gameState.workers += answerFromCharacter.diffGameState.diffWorkers;
+        if (answerFromCharacter.diffGameState.diffWorkers > 0) postAnswerList.Add("Отношение Трудового Братства: +" + answerFromCharacter.diffGameState.diffWorkers);
+        if (answerFromCharacter.diffGameState.diffWorkers < 0) postAnswerList.Add("Отношение Трудового Братства: " + answerFromCharacter.diffGameState.diffWorkers);
         gameState.pets += answerFromCharacter.diffGameState.diffPets;
+        if (answerFromCharacter.diffGameState.diffPets > 0) postAnswerList.Add("Отношение Братьев Меньших: +" + answerFromCharacter.diffGameState.diffPets);
+        if (answerFromCharacter.diffGameState.diffPets < 0) postAnswerList.Add("Отношение Братьев Меньших: " + answerFromCharacter.diffGameState.diffPets);
         gameState.robots += answerFromCharacter.diffGameState.diffRobots;
+        if (answerFromCharacter.diffGameState.diffRobots > 0) postAnswerList.Add("Отношение Роботов: +" + answerFromCharacter.diffGameState.diffRobots);
+        if (answerFromCharacter.diffGameState.diffRobots < 0) postAnswerList.Add("Отношение Роботов: " + answerFromCharacter.diffGameState.diffRobots);
         gameState.gloves += answerFromCharacter.diffGameState.diffGloves;
+        if (answerFromCharacter.diffGameState.diffGloves > 0) postAnswerList.Add("Отношение Золотой Перчатки: +" + answerFromCharacter.diffGameState.diffGloves);
+        if (answerFromCharacter.diffGameState.diffGloves < 0) postAnswerList.Add("Отношение Золтой Перчатки: " + answerFromCharacter.diffGameState.diffGloves);
         gameState.scientists += answerFromCharacter.diffGameState.diffScientists;
+        if (answerFromCharacter.diffGameState.diffScientists > 0) postAnswerList.Add("Отношение Исследователей: +" + answerFromCharacter.diffGameState.diffScientists);
+        if (answerFromCharacter.diffGameState.diffScientists < 0) postAnswerList.Add("Отношение Исследователей: " + answerFromCharacter.diffGameState.diffScientists);
         gameState.galaxy += answerFromCharacter.diffGameState.diffGalaxy;
+        if (answerFromCharacter.diffGameState.diffGalaxy > 0) postAnswerList.Add("Отношение Космических Обитателей: +" + answerFromCharacter.diffGameState.diffGalaxy);
+        if (answerFromCharacter.diffGameState.diffGalaxy < 0) postAnswerList.Add("Отношение Космических Обитателей: " + answerFromCharacter.diffGameState.diffGalaxy);
         //king state
         //sick
-        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && gameState.kingState.sick) { }; //обнулить счетчик болезни м.б SickStruct
+        //
+        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && gameState.kingState.sick) //обнулить счетчик болезни м.б SickStruct
+        {
+            
+        }; 
         if ((answerFromCharacter.diffGameState.diffKingSick == 1) && gameState.kingState.Ok()) gameState.kingState.sick = true; //доделать, передать инфу/сообщение в PostAnwser()
         if ((answerFromCharacter.diffGameState.diffKingSick == 1) && gameState.kingState.madness) gameState.kingState.sick = true; //доделать, передать инфу/сообщение в PostAnwser()
         if ((answerFromCharacter.diffGameState.diffKingSick == -1) && gameState.kingState.sick) gameState.kingState.sick = false;  //доделать, передать инфу/сообщение в PostAnwser() 
@@ -239,7 +268,17 @@ public class Putin : MonoBehaviour
         if (answerFromCharacter.diffGameState.diffWar == -1) { }; //доделать, передать инфу/сообщение в PostAnwser()
     }
 
-    void UpdateGameStatus()
+    private void PreparePostAnswer() 
+    {
+        foreach (string line in postAnswerList)
+        {
+           
+        }
+
+            
+    }
+
+    private void UpdateGameStatus()
     {
         food.GetComponent<Text>().text = gameState.food.ToString();
         money.GetComponent<Text>().text = gameState.money.ToString();
