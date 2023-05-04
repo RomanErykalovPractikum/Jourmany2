@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,22 +31,52 @@ public class Putin : MonoBehaviour
 
     public struct KingStateStruct
     {
-        public bool sick;
-        public bool madness;
-        public bool delight;
+        public int sickDaysLeft;
+        public int madnessDaysLeft;
+        public int delightDaysLeft;
+
+        public void kingStartSick()
+        {
+            sickDaysLeft = 10;
+        }
+
+        public void kingStartMadness()
+        {
+            madnessDaysLeft = 7;
+        }
+
+        public void kingStartDelight()
+        {
+            delightDaysLeft = 5;
+        }
+
+        public void kingStopSick()
+        {
+            sickDaysLeft = 0;
+        }
+
+        public void kingStopMadness()
+        {
+            madnessDaysLeft = 0;
+        }
+
+        public void kingStopDelight()
+        {
+            delightDaysLeft = 0;
+        }
 
         public bool Ok()
         {
-            if (sick || madness|| delight) return false; else return true;
+            if ( (sickDaysLeft > 0) || (madnessDaysLeft > 0) || (delightDaysLeft > 0)) return false; else return true;
         }
 
         public override string ToString()
         {
             string s = "";
             if ( Ok() ) return "ОК";
-            if ( sick ) s += "Болен ";
-            if ( madness) s += "Безумен ";
-            if ( delight ) s += "Восторг ";
+            if (sickDaysLeft > 0) s += "Болен ";
+            if (madnessDaysLeft > 0) s += "Безумен ";
+            if (delightDaysLeft > 0) s += "Восторг ";
             return s.Trim();
 
         }
@@ -76,7 +105,22 @@ public class Putin : MonoBehaviour
         }
     }
 
+    public struct SickStruct
+    {
+        public int daysLeft;
+        //что за война (? эпидемия, болезнь)
+    }
 
+    public struct WarStruct
+    {
+        public int daysLeft;
+
+    }
+
+    public struct EpidemyStruct
+    {
+        public int daysLeft;
+    }
 
     private const int HEROES_COUNT = 18;
     public GameObject[] heroes = new GameObject[HEROES_COUNT]; //GameObject
@@ -136,7 +180,7 @@ public class Putin : MonoBehaviour
 
         gameState.food = gameState.money = gameState.techno = gameState.pollen = 10;
         gameState.workers = gameState.pets = gameState.robots = gameState.gloves = gameState.scientists = gameState.galaxy = 5;
-        gameState.kingState = new KingStateStruct() { sick = true, madness = true, delight = false };
+        gameState.kingState = new KingStateStruct() { sickDaysLeft = 2, madnessDaysLeft = 0, delightDaysLeft = 0 };
         gameState.govermentState = new GovermentStateStruct() { war = true , epidemy = true, revolt = true };
 
         foreach (GameObject hero in heroes)
@@ -158,7 +202,8 @@ public class Putin : MonoBehaviour
     {
         buttonOk.SetActive(false);
         buttonOk2.SetActive(false);
-        buttonYes.SetActive(true);
+        buttonYes.SetActive(true); //проверка на Delight
+
         buttonNo.SetActive(true);
 
         heroes[heroNumber].SetActive(false);
@@ -187,6 +232,8 @@ public class Putin : MonoBehaviour
         buttonYes.SetActive(false);
         buttonNo.SetActive(false);
         buttonOk.SetActive(true);
+
+        //Скорее всего сюда добавить Mad и Delight
 
         answerFromCharacter = characters[heroNumber].Answer(answer);
         mainText.GetComponent<Text>().text = answerFromCharacter.answerString;
@@ -222,7 +269,7 @@ public class Putin : MonoBehaviour
         if (answerFromCharacter.diffGameState.diffTechno < 0) postAnswerList.Add("Технологии отстают в развитии: " + answerFromCharacter.diffGameState.diffTechno);
         gameState.pollen += answerFromCharacter.diffGameState.diffPollen;
         if (answerFromCharacter.diffGameState.diffPollen > 0) postAnswerList.Add("Пополнение запасов пыльцы: +" + answerFromCharacter.diffGameState.diffPollen);
-        if (answerFromCharacter.diffGameState.diffPollen < 0) postAnswerList.Add("Сокращение запасов пыльцы : " + answerFromCharacter.diffGameState.diffPollen);//Синоним уменьшилось
+        if (answerFromCharacter.diffGameState.diffPollen < 0) postAnswerList.Add("Сокращение запасов пыльцы : " + answerFromCharacter.diffGameState.diffPollen);
         //union
         gameState.workers += answerFromCharacter.diffGameState.diffWorkers;
         if (answerFromCharacter.diffGameState.diffWorkers > 0) postAnswerList.Add("Отношение Трудового Братства: +" + answerFromCharacter.diffGameState.diffWorkers);
@@ -245,24 +292,25 @@ public class Putin : MonoBehaviour
         //king state
         //sick
         //
-        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && gameState.kingState.sick) //обнулить счетчик болезни м.б SickStruct
+        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && (gameState.kingState.sickDaysLeft > 0)) //обнулить счетчик болезни м.б SickStruct
         {
-            
+            gameState.kingState.kingStartSick();
+            postAnswerList.Add("Вы заболеваете");
         }; 
-        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && gameState.kingState.Ok()) gameState.kingState.sick = true; //доделать, передать инфу/сообщение в PostAnwser()
-        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && gameState.kingState.madness) gameState.kingState.sick = true; //доделать, передать инфу/сообщение в PostAnwser()
-        if ((answerFromCharacter.diffGameState.diffKingSick == -1) && gameState.kingState.sick) gameState.kingState.sick = false;  //доделать, передать инфу/сообщение в PostAnwser() 
-        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && gameState.kingState.delight) gameState.kingState.delight = false;
+        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && gameState.kingState.Ok()) gameState.kingState.kingStartSick(); //доделать, передать инфу/сообщение в PostAnwser()
+        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && !gameState.kingState.Ok()) gameState.kingState.kingStartSick(); //доделать, передать инфу/сообщение в PostAnwser()
+        if ((answerFromCharacter.diffGameState.diffKingSick == -1) && (gameState.kingState.sickDaysLeft > 0)) gameState.kingState.kingStopSick();  //доделать, передать инфу/сообщение в PostAnwser() 
+        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && (gameState.kingState.delightDaysLeft > 0)) gameState.kingState.kingStopDelight();
         //madness
-        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && gameState.kingState.madness) { }; //обнулить счетчик Безумия м.б MadnessStruct
-        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && gameState.kingState.Ok()) gameState.kingState.madness = true; //доделать, передать инфу/сообщение в PostAnwser()
-        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && gameState.kingState.sick) gameState.kingState.madness = true; //доделать, передать инфу/сообщение в PostAnwser()
-        if ((answerFromCharacter.diffGameState.diffKingMadness == -1) && gameState.kingState.madness) gameState.kingState.madness = false;  //доделать, передать инфу/сообщение в PostAnwser()
+        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && (gameState.kingState.madnessDaysLeft > 0)) { }; //обнулить счетчик Безумия м.б MadnessStruct
+        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && gameState.kingState.Ok()) gameState.kingState.kingStartMadness(); //доделать, передать инфу/сообщение в PostAnwser()
+        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && (gameState.kingState.sickDaysLeft > 0)) gameState.kingState.kingStartMadness(); //доделать, передать инфу/сообщение в PostAnwser()
+        if ((answerFromCharacter.diffGameState.diffKingMadness == -1) && (gameState.kingState.madnessDaysLeft > 0)) gameState.kingState.kingStopMadness();  //доделать, передать инфу/сообщение в PostAnwser()
         //delight
-        if ((answerFromCharacter.diffGameState.diffKingDelight== 1) && gameState.kingState.delight) { }; //обнулить счетчик болезни м.б DelightStruct 
-        if ((answerFromCharacter.diffGameState.diffKingDelight == 1) && gameState.kingState.Ok()) gameState.kingState.delight = true; //доделать, передать инфу/сообщение в PostAnwser()
-        if ((answerFromCharacter.diffGameState.diffKingDelight == 1) && gameState.kingState.sick) gameState.kingState.sick = false;
-        if ((answerFromCharacter.diffGameState.diffKingDelight == -1) && gameState.kingState.delight) gameState.kingState.delight = false;
+        if ((answerFromCharacter.diffGameState.diffKingDelight== 1) && (gameState.kingState.delightDaysLeft > 0)) { }; //обнулить счетчик болезни м.б DelightStruct 
+        if ((answerFromCharacter.diffGameState.diffKingDelight == 1) && gameState.kingState.Ok()) gameState.kingState.kingStartMadness(); //доделать, передать инфу/сообщение в PostAnwser()
+        if ((answerFromCharacter.diffGameState.diffKingDelight == 1) && (gameState.kingState.sickDaysLeft > 0)) gameState.kingState.kingStartMadness();
+        if ((answerFromCharacter.diffGameState.diffKingDelight == -1) && (gameState.kingState.delightDaysLeft > 0)) gameState.kingState.kingStopMadness();
         //goverment state  
         if (answerFromCharacter.diffGameState.diffWar == 1) { }; //доделать, передать инфу/сообщение в PostAnwser()
         if (answerFromCharacter.diffGameState.diffWar == -1) { }; //доделать, передать инфу/сообщение в PostAnwser()
