@@ -291,26 +291,71 @@ public class Putin : MonoBehaviour
         if (answerFromCharacter.diffGameState.diffGalaxy < 0) postAnswerList.Add("Отношение Космических Обитателей: " + answerFromCharacter.diffGameState.diffGalaxy);
         //king state
         //sick
-        //
-        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && (gameState.kingState.sickDaysLeft > 0)) //обнулить счетчик болезни м.б SickStruct
+        if ((answerFromCharacter.diffGameState.diffKingSick == 0) && (gameState.kingState.sickDaysLeft > 0)) 
+        {
+            postAnswerList.Add("Вы болеете");
+        };
+        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && (gameState.kingState.sickDaysLeft == 0)) 
         {
             gameState.kingState.kingStartSick();
-            postAnswerList.Add("Вы заболеваете");
-        }; 
-        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && gameState.kingState.Ok()) gameState.kingState.kingStartSick(); //доделать, передать инфу/сообщение в PostAnwser()
-        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && !gameState.kingState.Ok()) gameState.kingState.kingStartSick(); //доделать, передать инфу/сообщение в PostAnwser()
-        if ((answerFromCharacter.diffGameState.diffKingSick == -1) && (gameState.kingState.sickDaysLeft > 0)) gameState.kingState.kingStopSick();  //доделать, передать инфу/сообщение в PostAnwser() 
-        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && (gameState.kingState.delightDaysLeft > 0)) gameState.kingState.kingStopDelight();
+            postAnswerList.Add("Вы заболели");
+        };
+        if ((answerFromCharacter.diffGameState.diffKingSick == -1) && (gameState.kingState.sickDaysLeft > 0))
+        {
+            gameState.kingState.kingStopSick();
+            postAnswerList.Add("Вы выздоровели");
+        };
+        if ((answerFromCharacter.diffGameState.diffKingSick == 1) && (gameState.kingState.delightDaysLeft > 0))
+        {
+            gameState.kingState.kingStopDelight();
+            postAnswerList.Add("Вы заболели и не чувствуете душевный подъем");
+        }
+        //сюда можно добавить daysLeft--, ипроверку выздоровел ли по кол-ву дней
         //madness
-        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && (gameState.kingState.madnessDaysLeft > 0)) { }; //обнулить счетчик Безумия м.б MadnessStruct
-        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && gameState.kingState.Ok()) gameState.kingState.kingStartMadness(); //доделать, передать инфу/сообщение в PostAnwser()
-        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && (gameState.kingState.sickDaysLeft > 0)) gameState.kingState.kingStartMadness(); //доделать, передать инфу/сообщение в PostAnwser()
-        if ((answerFromCharacter.diffGameState.diffKingMadness == -1) && (gameState.kingState.madnessDaysLeft > 0)) gameState.kingState.kingStopMadness();  //доделать, передать инфу/сообщение в PostAnwser()
+        if ((answerFromCharacter.diffGameState.diffKingMadness == 0) && (gameState.kingState.madnessDaysLeft > 0))
+        {
+            postAnswerList.Add("Вы все еще бузумны");
+        }
+        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && (gameState.kingState.madnessDaysLeft > 0)) 
+        {
+            postAnswerList.Add("Вы еще более бузумны");
+            gameState.kingState.kingStartMadness();
+        };
+        if ((answerFromCharacter.diffGameState.diffKingMadness == 1) && (gameState.kingState.madnessDaysLeft == 0))
+        {
+            postAnswerList.Add("Вы стали безумны, ваши ответы хаотичны");
+            gameState.kingState.kingStartMadness();
+        }
+        if ((answerFromCharacter.diffGameState.diffKingMadness == -1) && (gameState.kingState.madnessDaysLeft > 0))
+        {
+            postAnswerList.Add("Ваш разум прояснился");
+            gameState.kingState.kingStopMadness();
+        }
         //delight
-        if ((answerFromCharacter.diffGameState.diffKingDelight== 1) && (gameState.kingState.delightDaysLeft > 0)) { }; //обнулить счетчик болезни м.б DelightStruct 
-        if ((answerFromCharacter.diffGameState.diffKingDelight == 1) && gameState.kingState.Ok()) gameState.kingState.kingStartMadness(); //доделать, передать инфу/сообщение в PostAnwser()
-        if ((answerFromCharacter.diffGameState.diffKingDelight == 1) && (gameState.kingState.sickDaysLeft > 0)) gameState.kingState.kingStartMadness();
-        if ((answerFromCharacter.diffGameState.diffKingDelight == -1) && (gameState.kingState.delightDaysLeft > 0)) gameState.kingState.kingStopMadness();
+        if ((answerFromCharacter.diffGameState.diffKingDelight == 0) && (gameState.kingState.delightDaysLeft > 0))
+        {
+            postAnswerList.Add("Вы все еще в восторге");
+        }
+        if ((answerFromCharacter.diffGameState.diffKingDelight== 1) && (gameState.kingState.delightDaysLeft > 0)) 
+        {
+            postAnswerList.Add("Вы снова в восторге");
+            gameState.kingState.kingStartDelight();
+        }
+        if ((answerFromCharacter.diffGameState.diffKingDelight == 1) && gameState.kingState.Ok())
+        {
+            postAnswerList.Add("Вы в восторге от происходящего и не можете никому отказать");
+            gameState.kingState.kingStartMadness();  
+        }
+        if ((answerFromCharacter.diffGameState.diffKingDelight == 1) && (gameState.kingState.sickDaysLeft > 0))
+        {
+            gameState.kingState.kingStopSick();
+            postAnswerList.Add("Неожиданный подъем сил помогает преодолеть вашу болезнь");
+        }
+        if ((answerFromCharacter.diffGameState.diffKingDelight == -1) && (gameState.kingState.delightDaysLeft > 0))
+        {
+            postAnswerList.Add("Ваш восторг прошел");
+            gameState.kingState.kingStopDelight();
+        }
         //goverment state  
         if (answerFromCharacter.diffGameState.diffWar == 1) { }; //доделать, передать инфу/сообщение в PostAnwser()
         if (answerFromCharacter.diffGameState.diffWar == -1) { }; //доделать, передать инфу/сообщение в PostAnwser()
