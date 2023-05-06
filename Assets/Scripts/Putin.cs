@@ -436,7 +436,6 @@ public class Putin : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
-        Debug.Log("Click Quit");
     }
 
     
