@@ -84,22 +84,22 @@ public class Putin : MonoBehaviour
 
     public struct GovermentStateStruct
     {
-        public bool war;
-        public bool epidemy;
-        public bool revolt;
+        public int warDaysLeft;
+        public int epidemyDaysLeft;
+        public int revoltDaysLeft;
 
         public bool Ok()
         {
-            if (war || epidemy || revolt) return false; else return true;
+            if (warDaysLeft > 0 || epidemyDaysLeft > 0 || revoltDaysLeft > 0) return false; else return true;
         }
 
         public override string ToString()
         {
             string s = "";
             if ( Ok() ) return "ОК";
-            if ( war ) s += "Война ";
-            if ( epidemy ) s += "Эпидемия ";
-            if ( revolt) s += "Бунт ";
+            if (warDaysLeft > 0) s += "Война ";
+            if (epidemyDaysLeft > 0) s += "Эпидемия ";
+            if (revoltDaysLeft > 0) s += "Бунт ";
             return s.Trim();
 
         }
@@ -182,8 +182,8 @@ public class Putin : MonoBehaviour
 
         gameState.food = gameState.money = gameState.techno = gameState.pollen = 10;
         gameState.workers = gameState.pets = gameState.robots = gameState.gloves = gameState.scientists = gameState.galaxy = 5;
-        gameState.kingState = new KingStateStruct() { sickDaysLeft = 2, madnessDaysLeft = 0, delightDaysLeft = 0 };
-        gameState.govermentState = new GovermentStateStruct() { war = true , epidemy = true, revolt = true };
+        gameState.kingState = new KingStateStruct() { sickDaysLeft = 0, madnessDaysLeft = 0, delightDaysLeft = 0 };
+        gameState.govermentState = new GovermentStateStruct() { warDaysLeft = 0 , epidemyDaysLeft = 0, revoltDaysLeft = 0 };
 
         foreach (GameObject hero in heroes)
         {
@@ -257,21 +257,22 @@ public class Putin : MonoBehaviour
 
     public void PostAnswer()
     {
-        mainText.GetComponent<Text>().text = new PostAnswerStruct("Дело сделано!").postAnswerString; // потом убрать
+        //mainText.GetComponent<Text>().text = new PostAnswerStruct("Дело сделано!").postAnswerString; // потом убрать
 
         PostProcessAnswerFromCharacter();
         UpdateGameStatus();
-        PreparePostAnswer();
-
-
+       
         buttonOk.SetActive(false);
         buttonOk2.SetActive(true);
+
+        mainText.GetComponent<Text>().text = PreparePostAnswer();
     }
 
     private void PostProcessAnswerFromCharacter()
     {
         //обнуляем
         postAnswerList.Clear();
+
         //resources
         gameState.food += answerFromCharacter.diffGameState.diffFood;
         if (answerFromCharacter.diffGameState.diffFood > 0) postAnswerList.Add("Пищи стало больше: +" + answerFromCharacter.diffGameState.diffFood);
@@ -285,7 +286,8 @@ public class Putin : MonoBehaviour
         gameState.pollen += answerFromCharacter.diffGameState.diffPollen;
         if (answerFromCharacter.diffGameState.diffPollen > 0) postAnswerList.Add("Пополнение запасов пыльцы: +" + answerFromCharacter.diffGameState.diffPollen);
         if (answerFromCharacter.diffGameState.diffPollen < 0) postAnswerList.Add("Сокращение запасов пыльцы : " + answerFromCharacter.diffGameState.diffPollen);
-        //union
+
+        //diplomacy
         gameState.workers += answerFromCharacter.diffGameState.diffWorkers;
         if (answerFromCharacter.diffGameState.diffWorkers > 0) postAnswerList.Add("Отношение Трудового Братства: +" + answerFromCharacter.diffGameState.diffWorkers);
         if (answerFromCharacter.diffGameState.diffWorkers < 0) postAnswerList.Add("Отношение Трудового Братства: " + answerFromCharacter.diffGameState.diffWorkers);
@@ -397,18 +399,20 @@ public class Putin : MonoBehaviour
 
 
         //goverment state  
+
         if (answerFromCharacter.diffGameState.diffWar == 1) { }; //доделать, передать инфу/сообщение в PostAnwser()
         if (answerFromCharacter.diffGameState.diffWar == -1) { }; //доделать, передать инфу/сообщение в PostAnwser()
     }
 
-    private void PreparePostAnswer() 
+    private string PreparePostAnswer() 
     {
+        string s = "";
         foreach (string line in postAnswerList)
         {
-           
+           s += line + '\n';
         }
 
-            
+        return s;
     }
 
     private void UpdateGameStatus()
@@ -427,6 +431,12 @@ public class Putin : MonoBehaviour
 
         kingState.GetComponent<Text>().text = gameState.kingState.ToString();
         govermentState.GetComponent<Text>().text = gameState.govermentState.ToString();
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+        Debug.Log("Click Quit");
     }
 
     

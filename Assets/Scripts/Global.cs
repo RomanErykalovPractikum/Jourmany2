@@ -17,7 +17,7 @@ abstract public class Character
     protected string path;
 
     //const
-    protected DiffGameStateStruct ERROR_DIFF_GAME_STATUS = new DiffGameStateStruct(0, 0, 0, 0, /**/ 0, 0, 0, 0, 0, 0 /**/, 0, 0, 0, /**/ 0, 0, 0);
+    protected DiffGameStateStruct ERROR_DIFF_GAME_STATUS = new DiffGameStateStruct(0, 0, 0, 0, /**/ 0, 0, 0, 0, 0, 0 /**/, 0, 0, 0, /**/ 0, 0, 0); //потом можноу удалить см. CharacterAnswerStruct и оставить ттлько Debug.Log
 
     public Character (string characterName, string union, int numberOfQuests)
     {
@@ -120,7 +120,7 @@ public struct DiffGameStateStruct
     }
 }
 
-public struct PostAnswerStruct
+public struct PostAnswerStruct //Потом можно удалить? Работаем через List же
 {
     public string postAnswerString;
     public PostAnswerStruct(string postAnswerString)

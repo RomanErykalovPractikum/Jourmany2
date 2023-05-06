@@ -9,12 +9,12 @@ public class RobotKindCharacter : Character
     //-------------------------
     string Q0 = "Люди лучше всех остаьных?";
         string A0Y = "Люди рады вашему решению, хотя не все на этой планете человечечкой расы";
-        DiffGameStateStruct D0Y = new DiffGameStateStruct (0, 0, 0, 0, /**/ 1, -1, -1, 1, 1, -1 /**/, 0, 0, 0, /**/ 0, 0, 0);
+        DiffGameStateStruct D0Y = new DiffGameStateStruct (0, 0, 0, 0, /**/ 1, -1, -1, 1, 1, -1 /**/, 1, 0, 0, /**/ 0, 0, 0);
         string A0N = "Представители других планет танцуют, даже домашние питомцы не рычат на роботов";
         DiffGameStateStruct D0N = new DiffGameStateStruct(0, 0, 0, 0, /**/ -1, 1, 1, -1, -1, 1 /**/, 0, 0, 0, /**/ 0, 0, 0);
     string Q1Y = "К вам рришли роботы. Че за фигня? Ты должен быть за нас";
         string A0YY = "Роботы довольны";
-        DiffGameStateStruct D0YY = new DiffGameStateStruct(0, 0, 0, 0, /**/ -1, 1, 1, -1, -1, 1 /**/, 0, 0, 0, /**/ 0, 0, 0);
+        DiffGameStateStruct D0YY = new DiffGameStateStruct(0, 0, 0, 0, /**/ -1, 1, 1, -1, -1, 1 /**/, -1, 0, 0, /**/ 0, 0, 0);
         string A0YN = "Роботы будут бунтовать";
         DiffGameStateStruct D0YN = new DiffGameStateStruct (0, 0, 0, 0, /**/ 1, -1, -1, 1, 1, -1 /**/, 0, 0, 0, /**/ 0, 0, 0);
     string Q1N = "К вам рришли люди. Че за фигня?Ты должен быть за нас";
@@ -24,7 +24,7 @@ public class RobotKindCharacter : Character
         DiffGameStateStruct D0NN = new DiffGameStateStruct(0, 0, 0, 0, /**/ -1, 1, 1, -1, -1, 1 /**/, 0, 0, 0, /**/ 0, 0, 0);
     //------------------------
 
-    public RobotKindCharacter() : base("Alice", "Robots", 1) { }
+    public RobotKindCharacter() : base("ALICE", "ROBOTS", 1) { }
 
     public override CharacterQuestionStruct Question()
     {
